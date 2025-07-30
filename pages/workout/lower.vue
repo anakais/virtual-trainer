@@ -55,36 +55,10 @@
           </div>
 
           <!-- Sets Configuration -->
-          <div class="space-y-4">
-            <div 
-              v-for="(set, setIndex) in exercise.sets" 
-              :key="setIndex"
-              class="flex items-center space-x-4 bg-gray-50 dark:bg-gray-700 rounded-2xl p-4"
-            >
-              <span class="text-gray-700 dark:text-gray-200 font-medium min-w-[80px]">Série {{ setIndex + 1 }}</span>
-              <input 
-                v-model="set.reps"
-                type="number" 
-                min="1"
-                class="bg-white dark:bg-gray-600 border border-gray-200 dark:border-gray-500 text-gray-900 dark:text-white rounded-xl px-4 py-3 w-24 text-center focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-                placeholder="0"
-              >
-              <span class="text-gray-600 dark:text-gray-300">repetições</span>
-              <div class="flex space-x-2 ml-auto">
-                <button 
-                  @click="set.completed = !set.completed"
-                  :class="[
-                    'px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200',
-                    set.completed 
-                      ? 'bg-green-500 text-white shadow-sm' 
-                      : 'bg-white dark:bg-gray-600 border border-gray-200 dark:border-gray-500 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-500'
-                  ]"
-                >
-                  {{ set.completed ? 'Concluído' : 'Marcar' }}
-                </button>
-              </div>
-            </div>
-          </div>
+          <ExerciseSets
+            :sets="exercise.sets"
+            @toggle-completed="(setIndex) => exercise.sets[setIndex].completed = !exercise.sets[setIndex].completed"
+          />
 
           <!-- Exercise Tips -->
           <div class="mt-6 p-4 bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl">
@@ -147,6 +121,7 @@
 </template>
 
 <script setup>
+import ExerciseSets from '~/components/ExerciseSets.vue'
 const { loadWorkoutData, saveWorkoutData, hasWorkoutData } = useWorkout()
 
 // Default exercises structure

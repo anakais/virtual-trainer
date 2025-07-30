@@ -1,88 +1,99 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
+  <div class="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-zinc-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
     <!-- Header -->
-    <header class="text-center py-8">
-      <h1 class="text-5xl font-bold text-white mb-2">
-        💪 Virtual Trainer
+    <header class="text-center py-16 px-4">
+      <h1 class="text-6xl font-light text-gray-900 dark:text-white mb-4 tracking-tight">
+        Virtual Trainer
       </h1>
-      <p class="text-xl text-blue-200">
+      <p class="text-xl text-gray-600 dark:text-gray-300 font-light">
         Seu personal trainer digital
       </p>
     </header>
 
-    <!-- Welcome Section -->
-    <main class="container mx-auto px-4 py-8">
-      <div class="max-w-4xl mx-auto text-center mb-12">
-        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-8">
-          <h2 class="text-3xl font-bold text-white mb-4">
-            Bem-vindo ao seu treino! 🎯
-          </h2>
-          <p class="text-lg text-blue-100 leading-relaxed">
-            Escolha o tipo de treino que deseja realizar hoje. 
-            Cada sessão é personalizada para maximizar seus resultados.
-          </p>
-        </div>
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+      <div class="max-w-4xl mx-auto">
+        <!-- Welcome Section -->
+        <div class="text-center mb-16">
+          <div class="bg-white dark:bg-gray-800 rounded-3xl p-12 shadow-sm border border-gray-100 dark:border-gray-700 mb-12">
+            <h2 class="text-3xl font-light text-gray-900 dark:text-white mb-6">
+              Bem-vindo ao seu treino
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto">
+              Escolha o tipo de treino que deseja realizar hoje. 
+              Cada sessão é personalizada para maximizar seus resultados.
+            </p>
+          </div>
 
-        <!-- Workout Options -->
-        <div class="grid md:grid-cols-2 gap-8">
-          <!-- Upper Body Card -->
-          <NuxtLink 
-            to="/workout/upper"
-            class="bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl p-8 cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-orange-500/25 block"
-          >
-            <div class="text-center">
-              <div class="text-6xl mb-4">💪</div>
-              <h3 class="text-2xl font-bold text-white mb-3">
-                Treino Superior
-              </h3>
-              <p class="text-orange-100 mb-4">
-                Foque nos músculos do tronco, braços e ombros
-              </p>
-              <div class="bg-white/20 rounded-full px-4 py-2 text-white font-semibold">
-                Inclui: Pull-ups, Push-ups, Bíceps, Ombros
+          <!-- Workout Options -->
+          <div class="grid md:grid-cols-2 gap-8 mb-16">
+            <!-- Upper Body Card -->
+            <NuxtLink 
+              to="/workout/upper"
+              class="group bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-lg hover:border-gray-200 dark:hover:border-gray-600 transition-all duration-300 block"
+            >
+              <div class="text-center">
+                <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-105 transition-transform">
+                  <span class="text-3xl text-white">💪</span>
+                </div>
+                <h3 class="text-2xl font-medium text-gray-900 dark:text-white mb-3">
+                  Treino Superior
+                </h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                  Foque nos músculos do tronco, braços e ombros
+                </p>
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-xl px-4 py-3 text-gray-700 dark:text-gray-200 font-medium">
+                  Pull-ups • Push-ups • Bíceps • Ombros
+                </div>
               </div>
-            </div>
-          </NuxtLink>
+            </NuxtLink>
 
-          <!-- Lower Body Card -->
-          <NuxtLink 
-            to="/workout/lower"
-            class="bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl p-8 cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-green-500/25 block"
-          >
-            <div class="text-center">
-              <div class="text-6xl mb-4">🦵</div>
-              <h3 class="text-2xl font-bold text-white mb-3">
-                Treino Inferior
-              </h3>
-              <p class="text-green-100 mb-4">
-                Fortaleça pernas, glúteos e core
-              </p>
-              <div class="bg-white/20 rounded-full px-4 py-2 text-white font-semibold">
-                Inclui: Squats, Flexor, Extensor, Panturrilhas, Abs
+            <!-- Lower Body Card -->
+            <NuxtLink 
+              to="/workout/lower"
+              class="group bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-lg hover:border-gray-200 dark:hover:border-gray-600 transition-all duration-300 block"
+            >
+              <div class="text-center">
+                <div class="w-20 h-20 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-105 transition-transform">
+                  <span class="text-3xl text-white">🦵</span>
+                </div>
+                <h3 class="text-2xl font-medium text-gray-900 dark:text-white mb-3">
+                  Treino Inferior
+                </h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                  Fortaleça pernas, glúteos e core
+                </p>
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-xl px-4 py-3 text-gray-700 dark:text-gray-200 font-medium">
+                  Squats • Flexor • Extensor • Panturrilhas • Abs
+                </div>
               </div>
-            </div>
-          </NuxtLink>
-        </div>
+            </NuxtLink>
+          </div>
 
-        <!-- Additional Info -->
-        <div class="mt-12 bg-white/5 backdrop-blur-sm rounded-xl p-6">
-          <h4 class="text-xl font-semibold text-white mb-3">
-            💡 Dica do Personal
-          </h4>
-          <p class="text-blue-100">
-            Alternar entre treinos superiores e inferiores permite que cada grupo muscular se recupere adequadamente, 
-            maximizando seus ganhos e evitando lesões.
-          </p>
-        </div>
+          <!-- Additional Info -->
+          <div class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-gray-700 mb-12">
+            <h4 class="text-xl font-medium text-gray-900 dark:text-white mb-4 flex items-center justify-center">
+              <span class="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mr-3">
+                💡
+              </span>
+              Dica do Personal
+            </h4>
+            <p class="text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl mx-auto">
+              Alternar entre treinos superiores e inferiores permite que cada grupo muscular se recupere adequadamente, 
+              maximizando seus ganhos e evitando lesões.
+            </p>
+          </div>
 
-        <!-- History Link -->
-        <div class="mt-6 text-center">
-          <NuxtLink 
-            to="/history"
-            class="inline-block bg-white/10 backdrop-blur-sm rounded-xl px-6 py-3 text-white font-semibold hover:bg-white/20 transition-colors"
-          >
-            📊 Ver Histórico de Treinos
-          </NuxtLink>
+          <!-- History Link -->
+          <div class="text-center">
+            <NuxtLink 
+              to="/history"
+              class="inline-flex items-center bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-8 py-4 rounded-2xl font-medium hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors"
+            >
+              <span class="mr-2">📊</span>
+              Ver Histórico de Treinos
+            </NuxtLink>
+          </div>
         </div>
       </div>
     </main>

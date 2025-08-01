@@ -132,9 +132,9 @@ const defaultExercises = [
     description: 'Barra fixa - força de tração',
     tip: 'Mantenha o corpo reto e controle o movimento na descida',
     sets: [
-      { reps: 8, completed: false },
-      { reps: 8, completed: false },
-      { reps: 8, completed: false }
+      { reps: 8, kilos: 70, completed: false },
+      { reps: 8, kilos: 70, completed: false },
+      { reps: 8, kilos: 70, completed: false }
     ]
   },
   {
@@ -143,9 +143,9 @@ const defaultExercises = [
     description: 'Barra baixa - variação mais fácil',
     tip: 'Mantenha o corpo alinhado e puxe até o peito tocar a barra',
     sets: [
-      { reps: 12, completed: false },
-      { reps: 12, completed: false },
-      { reps: 12, completed: false }
+      { reps: 12, kilos: 30, completed: false },
+      { reps: 12, kilos: 30, completed: false },
+      { reps: 12, kilos: 30, completed: false }
     ]
   },
   {
@@ -154,9 +154,9 @@ const defaultExercises = [
     description: 'Flexão de cotovelo - isolamento',
     tip: 'Mantenha os cotovelos fixos e controle o movimento',
     sets: [
-      { reps: 15, completed: false },
-      { reps: 15, completed: false },
-      { reps: 15, completed: false }
+      { reps: 15, kilos: 15, completed: false },
+      { reps: 15, kilos: 15, completed: false },
+      { reps: 15, kilos: 15, completed: false }
     ]
   },
   {
@@ -165,9 +165,9 @@ const defaultExercises = [
     description: 'Flexão de braço - peito e tríceps',
     tip: 'Mantenha o corpo reto e desça até quase tocar o chão',
     sets: [
-      { reps: 10, completed: false },
-      { reps: 10, completed: false },
-      { reps: 10, completed: false }
+      { reps: 10, kilos: 70, completed: false },
+      { reps: 10, kilos: 70, completed: false },
+      { reps: 10, kilos: 70, completed: false }
     ]
   },
   {
@@ -176,9 +176,9 @@ const defaultExercises = [
     description: 'Desenvolvimento - ombros',
     tip: 'Mantenha a postura ereta e controle o movimento',
     sets: [
-      { reps: 12, completed: false },
-      { reps: 12, completed: false },
-      { reps: 12, completed: false }
+      { reps: 12, kilos: 7.5, completed: false },
+      { reps: 12, kilos: 7.5, completed: false },
+      { reps: 12, kilos: 7.5, completed: false }
     ]
   }
 ]

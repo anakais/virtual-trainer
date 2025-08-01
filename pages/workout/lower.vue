@@ -132,20 +132,9 @@ const defaultExercises = [
     description: 'Agachamento - quadríceps e glúteos',
     tip: 'Mantenha os pés na largura dos ombros e desça como se fosse sentar',
     sets: [
-      { reps: 15, completed: false },
-      { reps: 15, completed: false },
-      { reps: 15, completed: false }
-    ]
-  },
-  {
-    name: 'Flexor',
-    emoji: '🦵',
-    description: 'Curl de perna - posterior da coxa',
-    tip: 'Mantenha o quadril estável e foque no movimento do joelho',
-    sets: [
-      { reps: 12, completed: false },
-      { reps: 12, completed: false },
-      { reps: 12, completed: false }
+      { reps: 10, kilos: 70, completed: false },
+      { reps: 8, kilos: 70, completed: false },
+      { reps: 5, kilos: 70, completed: false }
     ]
   },
   {
@@ -154,9 +143,20 @@ const defaultExercises = [
     description: 'Extensão de perna - quadríceps',
     tip: 'Controle o movimento e não trave os joelhos no final',
     sets: [
-      { reps: 15, completed: false },
-      { reps: 15, completed: false },
-      { reps: 15, completed: false }
+      { reps: 10, kilos: 35, completed: false },
+      { reps: 10, kilos: 35, completed: false },
+      { reps: 10, kilos: 35, completed: false }
+    ]
+  },
+  {
+    name: 'Flexor',
+    emoji: '🦵',
+    description: 'Curl de perna - posterior da coxa',
+    tip: 'Mantenha o quadril estável e foque no movimento do joelho',
+    sets: [
+      { reps: 10, kilos: 30, completed: false },
+      { reps: 10, kilos: 30, completed: false },
+      { reps: 10, kilos: 30, completed: false }
     ]
   },
   {
@@ -165,9 +165,9 @@ const defaultExercises = [
     description: 'Elevação de panturrilha - gastrocnêmio',
     tip: 'Faça o movimento completo, subindo e descendo lentamente',
     sets: [
-      { reps: 20, completed: false },
-      { reps: 20, completed: false },
-      { reps: 20, completed: false }
+      { reps: 12, kilos: 100, completed: false },
+      { reps: 12, kilos: 100, completed: false },
+      { reps: 12, kilos: 100, completed: false }
     ]
   },
   {
@@ -176,9 +176,9 @@ const defaultExercises = [
     description: 'Abdominal - core e reto abdominal',
     tip: 'Mantenha o pescoço relaxado e foque em levantar os ombros',
     sets: [
-      { reps: 20, completed: false },
-      { reps: 20, completed: false },
-      { reps: 20, completed: false }
+      { reps: 10, completed: false },
+      { reps: 10, completed: false },
+      { reps: 10, completed: false }
     ]
   }
 ]

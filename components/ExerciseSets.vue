@@ -25,9 +25,9 @@
         placeholder="kg"
       >
       <span class="text-gray-600 dark:text-gray-300 text-xs sm:text-base">kg</span>
-      <div class="flex space-x-1 sm:space-x-2 ml-auto">
+      <div class="flex space-x-1 sm:space-x-2 ml-auto items-center">
         <button
-          @click="$emit('toggle-completed', setIndex)"
+          @click="handleButtonClick(setIndex)"
           :class="[
             'px-2 py-1 sm:px-4 sm:py-2 rounded-xl text-xs sm:text-sm font-medium transition-all duration-200',
             set.completed
@@ -35,16 +35,71 @@
               : 'bg-white dark:bg-gray-600 border border-gray-200 dark:border-gray-500 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-500'
           ]"
         >
-          {{ set.completed ? 'Feito' : 'Marcar' }}
+        <span v-if="timers[setIndex] && timers[setIndex].running" class="text-xs sm:text-sm text-yellow-500 dark:text-yellow-400">
+          {{ timers[setIndex].remaining }}s
+        </span>
+          <template v-else>
+            {{ set.completed ? 'Feito' : 'Marcar' }}
+          </template>
         </button>
+        
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-defineProps({
+import { reactive, onUnmounted } from 'vue'
+
+const props = defineProps({
   sets: Array
 })
-defineEmits(['toggle-completed'])
+const emit = defineEmits(['toggle-completed'])
+
+// Timer state for each set
+const timers = reactive([])
+let timerIntervals = []
+
+function handleButtonClick(setIndex) {
+  // Emit original event
+  emit('toggle-completed', setIndex)
+  // Start timer if not already running
+  if ((!timers[setIndex] || !timers[setIndex].running) && props.sets[setIndex].completed) {
+    startTimer(setIndex)
+  }
+}
+
+function startTimer(setIndex) {
+  timers[setIndex] = { running: true, remaining: 45 }
+  if (timerIntervals[setIndex]) clearInterval(timerIntervals[setIndex])
+  timerIntervals[setIndex] = setInterval(() => {
+    if (timers[setIndex].remaining > 0) {
+      timers[setIndex].remaining--
+    } else {
+      timers[setIndex].running = false
+      clearInterval(timerIntervals[setIndex])
+      beep()
+    }
+  }, 1000)
+}
+
+function beep() {
+  // Simple beep using Web Audio API
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)()
+    const oscillator = ctx.createOscillator()
+    oscillator.type = 'sine'
+    oscillator.frequency.value = 432
+    oscillator.connect(ctx.destination)
+    oscillator.start()
+    setTimeout(() => {
+      oscillator.stop()
+      ctx.close()
+    }, 300)
+  } catch (e) {}
+}
+
+onUnmounted(() => {
+  timerIntervals.forEach(i => clearInterval(i))
+})
 </script> 

@@ -222,64 +222,20 @@
 
 <script setup>
 import ExerciseSets from '~/components/ExerciseSets.vue';
+const { useWorkoutSession } = useWorkout();
 const {
-  loadWorkoutData,
-  saveWorkoutData,
-  hasWorkoutData,
-  getExercisesWithSaved,
-} = useWorkout();
-
-// Load saved data if exists, otherwise defaults
-const exercises = ref(getExercisesWithSaved('lower'));
-
-// Load saved workout data on mount
-onMounted(() => {
-  // refresh in case storage changed after mount
-  exercises.value = getExercisesWithSaved('lower');
-});
-
-// Check if there's saved data
-const hasSavedData = computed(() => hasWorkoutData('lower'));
-
-// Auto-save when exercises change
-watch(
   exercises,
-  (newExercises) => {
-    saveWorkoutData('lower', newExercises);
-  },
-  { deep: true },
-);
-
-const completedSets = computed(() => {
-  return exercises.value.reduce((total, exercise) => {
-    return total + exercise.sets.filter((set) => set.completed).length;
-  }, 0);
-});
-
-const totalSets = computed(() => {
-  return exercises.value.reduce((total, exercise) => {
-    return total + exercise.sets.length;
-  }, 0);
-});
-
-const progressPercentage = computed(() => {
-  return totalSets.value > 0
-    ? Math.round((completedSets.value / totalSets.value) * 100)
-    : 0;
-});
-
-const resetWorkout = () => {
-  exercises.value.forEach((exercise) => {
-    exercise.sets.forEach((set) => {
-      set.completed = false;
-    });
-  });
-};
+  hasSavedData,
+  completedSets,
+  totalSets,
+  progressPercentage,
+  resetWorkout,
+  saveProgress,
+} = useWorkoutSession('lower');
 
 const saveWorkout = () => {
-  const success = saveWorkoutData('lower', exercises.value);
+  const success = saveProgress();
   if (success) {
-    // Show success message
     const button = event.target;
     const originalText = button.textContent;
     button.textContent = '✅ Salvo!';

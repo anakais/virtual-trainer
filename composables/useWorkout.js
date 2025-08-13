@@ -1,3 +1,5 @@
+import { ref, computed, watch, onMounted } from 'vue';
+
 export const useWorkout = () => {
   // Load saved workout data from localStorage
   const loadWorkoutData = (workoutType) => {
@@ -165,6 +167,63 @@ export const useWorkout = () => {
     });
   };
 
+  const useWorkoutSession = (workoutType) => {
+    const exercises = ref(getExercisesWithSaved(workoutType));
+    const hasSavedData = computed(() => hasWorkoutData(workoutType));
+
+    onMounted(() => {
+      exercises.value = getExercisesWithSaved(workoutType);
+    });
+
+    watch(
+      exercises,
+      (newExercises) => {
+        saveWorkoutData(workoutType, newExercises);
+      },
+      { deep: true },
+    );
+
+    const completedSets = computed(() => {
+      return exercises.value.reduce((total, exercise) => {
+        return total + exercise.sets.filter((set) => set.completed).length;
+      }, 0);
+    });
+
+    const totalSets = computed(() => {
+      return exercises.value.reduce((total, exercise) => {
+        return total + exercise.sets.length;
+      }, 0);
+    });
+
+    const progressPercentage = computed(() => {
+      return totalSets.value > 0
+        ? Math.round((completedSets.value / totalSets.value) * 100)
+        : 0;
+    });
+
+    const resetWorkout = () => {
+      exercises.value.forEach((exercise) => {
+        exercise.sets.forEach((set) => {
+          set.completed = false;
+        });
+      });
+    };
+
+    const saveProgress = () => {
+      return saveWorkoutData(workoutType, exercises.value);
+    };
+
+    return {
+      exercises,
+      hasSavedData,
+      completedSets,
+      totalSets,
+      progressPercentage,
+      resetWorkout,
+      saveProgress,
+    };
+  };
+
   // Save workout data to localStorage
   const saveWorkoutData = (workoutType, exercises) => {
     if (process.client) {
@@ -319,5 +378,6 @@ export const useWorkout = () => {
     getDefaultExercisesMeta,
     getDefaultExercises,
     getExercisesWithSaved,
+    useWorkoutSession,
   };
 };

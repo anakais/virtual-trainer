@@ -28,69 +28,28 @@
           </div>
 
           <!-- Workout Options -->
-          <div class="mb-16 grid gap-8 md:grid-cols-2">
-            <!-- Upper Body Card -->
-            <NuxtLink
+          <div class="mb-12 grid gap-4 md:grid-cols-2">
+            <WorkoutCard
               to="/workout/upper"
-              class="group block rounded-3xl border border-gray-100 bg-white p-8 shadow-sm transition-all duration-300 hover:border-gray-200 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:hover:border-gray-600"
-            >
-              <div class="text-center">
-                <div
-                  class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 transition-transform group-hover:scale-105"
-                >
-                  <span class="text-3xl text-white">💪</span>
-                </div>
-                <h3
-                  class="mb-3 text-2xl font-medium text-gray-900 dark:text-white"
-                >
-                  Treino Superior
-                </h3>
-                <p
-                  class="mb-6 leading-relaxed text-gray-600 dark:text-gray-300"
-                >
-                  Foque nos músculos do tronco, braços e ombros
-                </p>
-                <div
-                  class="rounded-xl bg-gray-50 px-4 py-3 font-medium text-gray-700 dark:bg-gray-700 dark:text-gray-200"
-                >
-                  Pull-ups • Push-ups • Bíceps • Ombros
-                </div>
-              </div>
-            </NuxtLink>
-
-            <!-- Lower Body Card -->
-            <NuxtLink
+              icon="💪"
+              gradient="from-blue-500 to-indigo-600"
+              title="Treino Superior"
+              description="Foque nos músculos do tronco, braços e ombros"
+              tags="Pull-ups • Push-ups • Bíceps • Ombros"
+            />
+            <WorkoutCard
               to="/workout/lower"
-              class="group block rounded-3xl border border-gray-100 bg-white p-8 shadow-sm transition-all duration-300 hover:border-gray-200 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:hover:border-gray-600"
-            >
-              <div class="text-center">
-                <div
-                  class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 transition-transform group-hover:scale-105"
-                >
-                  <span class="text-3xl text-white">🦵</span>
-                </div>
-                <h3
-                  class="mb-3 text-2xl font-medium text-gray-900 dark:text-white"
-                >
-                  Treino Inferior
-                </h3>
-                <p
-                  class="mb-6 leading-relaxed text-gray-600 dark:text-gray-300"
-                >
-                  Fortaleça pernas, glúteos e core
-                </p>
-                <div
-                  class="rounded-xl bg-gray-50 px-4 py-3 font-medium text-gray-700 dark:bg-gray-700 dark:text-gray-200"
-                >
-                  Squats • Flexor • Extensor • Panturrilhas • Abs
-                </div>
-              </div>
-            </NuxtLink>
+              icon="🦵"
+              gradient="from-emerald-500 to-teal-600"
+              title="Treino Inferior"
+              description="Fortaleça pernas, glúteos e core"
+              tags="Squats • Flexor • Extensor • Panturrilhas • Abs"
+            />
           </div>
 
           <!-- Additional Info -->
           <div
-            class="mb-12 rounded-3xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+            class="mb-12 rounded-xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
           >
             <h4
               class="mb-4 flex items-center justify-center text-xl font-medium text-gray-900 dark:text-white"

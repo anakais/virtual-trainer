@@ -5,6 +5,38 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   css: ['~/assets/main.css'],
+  app: {
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '32x32',
+          href: '/favicon-32x32.png',
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '16x16',
+          href: '/favicon-16x16.png',
+        },
+        {
+          rel: 'apple-touch-icon',
+          sizes: '180x180',
+          href: '/apple-touch-icon.png',
+        },
+      ],
+      meta: [
+        { name: 'apple-mobile-web-app-capable', content: 'yes' },
+        {
+          name: 'apple-mobile-web-app-status-bar-style',
+          content: 'black-translucent',
+        },
+        { name: 'theme-color', content: '#111827' },
+      ],
+    },
+  },
   vite: {
     plugins: [tailwindcss()],
   },
@@ -21,10 +53,18 @@ export default defineNuxtConfig({
       theme_color: '#111827',
       icons: [
         {
-          src: '/favicon.ico',
-          sizes: '64x64 32x32 24x24 16x16',
-          type: 'image/x-icon',
+          src: '/android-chrome-192x192.png',
+          sizes: '192x192',
+          type: 'image/png',
+          purpose: 'any maskable',
         },
+        {
+          src: '/android-chrome-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'any maskable',
+        },
+        { src: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
       ],
     },
     workbox: {

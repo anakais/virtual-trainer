@@ -57,14 +57,14 @@
 </template>
 
 <script setup>
-import { reactive, onUnmounted } from 'vue';
+import { reactive, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps({
   sets: Array,
 });
 const emit = defineEmits(['toggle-completed']);
 
-// Timer state for each set
+// Timer state for each set (stores absolute end time to survive background)
 const timers = reactive([]);
 let timerIntervals = [];
 
@@ -81,17 +81,31 @@ function handleButtonClick(setIndex) {
 }
 
 function startTimer(setIndex) {
-  timers[setIndex] = { running: true, remaining: 45 };
+  const durationSeconds = 45;
+  const endAt = Date.now() + durationSeconds * 1000;
+  timers[setIndex] = {
+    running: true,
+    remaining: durationSeconds,
+    endAt,
+  };
   if (timerIntervals[setIndex]) clearInterval(timerIntervals[setIndex]);
-  timerIntervals[setIndex] = setInterval(() => {
-    if (timers[setIndex].remaining > 0) {
-      timers[setIndex].remaining--;
-    } else {
-      timers[setIndex].running = false;
-      clearInterval(timerIntervals[setIndex]);
-      beep();
-    }
-  }, 1000);
+  timerIntervals[setIndex] = setInterval(() => tickTimer(setIndex), 250);
+}
+
+function tickTimer(setIndex) {
+  const t = timers[setIndex];
+  if (!t || !t.running || !t.endAt) return;
+  const remainingSec = Math.ceil((t.endAt - Date.now()) / 1000);
+  t.remaining = remainingSec > 0 ? remainingSec : 0;
+  if (t.remaining <= 0) {
+    t.running = false;
+    clearInterval(timerIntervals[setIndex]);
+    beep();
+  }
+}
+
+function tickAllTimers() {
+  timers.forEach((_, idx) => tickTimer(idx));
 }
 
 function beep() {
@@ -112,5 +126,24 @@ function beep() {
 
 onUnmounted(() => {
   timerIntervals.forEach((i) => clearInterval(i));
+});
+
+onMounted(() => {
+  // Ensure timers catch up after returning from background
+  document.addEventListener('visibilitychange', handleVisibilityChange, false);
+});
+
+function handleVisibilityChange() {
+  if (document.visibilityState === 'visible') {
+    tickAllTimers();
+  }
+}
+
+onUnmounted(() => {
+  document.removeEventListener(
+    'visibilitychange',
+    handleVisibilityChange,
+    false,
+  );
 });
 </script>

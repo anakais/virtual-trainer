@@ -14,7 +14,7 @@
       <div class="mx-auto max-w-6xl space-y-8">
         <!-- Overall Stats -->
         <div
-          class="rounded-xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+          class="rounded-xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800"
         >
           <h2
             class="mb-6 flex items-center text-2xl font-medium text-gray-900 dark:text-white"
@@ -84,7 +84,7 @@
 
         <!-- Volume Records -->
         <div
-          class="rounded-xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+          class="rounded-xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800"
         >
           <h2
             class="mb-6 flex items-center text-2xl font-medium text-gray-900 dark:text-white"
@@ -183,7 +183,7 @@
 
         <!-- Workout History -->
         <div
-          class="rounded-xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+          class="rounded-xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800"
         >
           <div class="mb-6 flex items-center justify-between">
             <h2
@@ -482,7 +482,7 @@
 
         <!-- Quick Actions -->
         <div
-          class="rounded-xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+          class="rounded-xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800"
         >
           <h2
             class="mb-6 flex items-center text-2xl font-medium text-gray-900 dark:text-white"

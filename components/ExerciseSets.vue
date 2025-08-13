@@ -3,7 +3,7 @@
     <div
       v-for="(set, setIndex) in sets"
       :key="setIndex"
-      class="flex flex-wrap items-center space-x-2 rounded-2xl bg-gray-50 p-3 dark:bg-gray-700 sm:space-x-4 sm:p-4"
+      class="flex flex-wrap items-center space-x-2 rounded-lg bg-gray-50 p-3 dark:bg-gray-700 sm:space-x-4 sm:p-4"
     >
       <span
         class="text-xs font-medium text-gray-700 dark:text-gray-200 sm:min-w-[80px] sm:text-base"

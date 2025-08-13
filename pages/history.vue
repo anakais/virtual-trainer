@@ -3,42 +3,18 @@
     class="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-zinc-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
   >
     <!-- Header -->
-    <header class="px-4 py-12 text-center">
-      <NuxtLink
-        to="/"
-        class="mb-8 inline-flex items-center text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
-      >
-        <svg
-          class="mr-2 h-5 w-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M15 19l-7-7 7-7"
-          ></path>
-        </svg>
-        Voltar
-      </NuxtLink>
-      <h1
-        class="mb-4 text-5xl font-light tracking-tight text-gray-900 dark:text-white"
-      >
-        Histórico de Treinos
-      </h1>
-      <p class="text-lg font-light text-gray-600 dark:text-gray-300">
-        Acompanhe seu progresso e desempenho
-      </p>
-    </header>
+    <AppHeader
+      showBack
+      title="Histórico de Treinos"
+      subtitle="Acompanhe seu progresso e desempenho"
+    />
 
     <!-- Statistics -->
     <main class="container mx-auto px-6 py-8">
       <div class="mx-auto max-w-6xl space-y-8">
         <!-- Overall Stats -->
         <div
-          class="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+          class="rounded-xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
         >
           <h2
             class="mb-6 flex items-center text-2xl font-medium text-gray-900 dark:text-white"
@@ -59,9 +35,7 @@
             Estatísticas Gerais
           </h2>
           <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
-            <div
-              class="rounded-2xl bg-gray-50 p-6 text-center dark:bg-gray-700"
-            >
+            <div class="rounded-lg bg-gray-50 p-6 text-center dark:bg-gray-700">
               <div
                 class="mb-2 text-3xl font-light text-gray-900 dark:text-white"
                 >{{ stats.totalWorkouts }}</div
@@ -70,9 +44,7 @@
                 >Treinos Realizados</div
               >
             </div>
-            <div
-              class="rounded-2xl bg-gray-50 p-6 text-center dark:bg-gray-700"
-            >
+            <div class="rounded-lg bg-gray-50 p-6 text-center dark:bg-gray-700">
               <div
                 class="mb-2 text-3xl font-light text-gray-900 dark:text-white"
                 >{{ stats.totalCompletedSets }}</div
@@ -81,9 +53,7 @@
                 >Séries Concluídas</div
               >
             </div>
-            <div
-              class="rounded-2xl bg-gray-50 p-6 text-center dark:bg-gray-700"
-            >
+            <div class="rounded-lg bg-gray-50 p-6 text-center dark:bg-gray-700">
               <div
                 class="mb-2 text-3xl font-light text-gray-900 dark:text-white"
                 >{{ stats.totalSets }}</div
@@ -92,9 +62,7 @@
                 >Total de Séries</div
               >
             </div>
-            <div
-              class="rounded-2xl bg-gray-50 p-6 text-center dark:bg-gray-700"
-            >
+            <div class="rounded-lg bg-gray-50 p-6 text-center dark:bg-gray-700">
               <div
                 class="mb-2 text-3xl font-light text-gray-900 dark:text-white"
                 >{{ completionRate }}%</div
@@ -116,7 +84,7 @@
 
         <!-- Volume Records -->
         <div
-          class="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+          class="rounded-xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
         >
           <h2
             class="mb-6 flex items-center text-2xl font-medium text-gray-900 dark:text-white"
@@ -140,7 +108,7 @@
             <div
               v-for="section in volumeRecords"
               :key="section.type"
-              class="rounded-2xl bg-gray-50 p-6 dark:bg-gray-700"
+              class="rounded-lg bg-gray-50 p-6 dark:bg-gray-700"
             >
               <div class="mb-4 flex items-center justify-between">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white">
@@ -215,7 +183,7 @@
 
         <!-- Workout History -->
         <div
-          class="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+          class="rounded-xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
         >
           <div class="mb-6 flex items-center justify-between">
             <h2
@@ -293,7 +261,7 @@
             <div
               v-for="(dayWorkouts, date) in groupedWorkouts"
               :key="date"
-              class="rounded-2xl bg-gray-50 p-6 dark:bg-gray-700"
+              class="rounded-lg bg-gray-50 p-6 dark:bg-gray-700"
             >
               <!-- Day Header -->
               <div class="mb-6 flex items-center justify-between">
@@ -514,7 +482,7 @@
 
         <!-- Quick Actions -->
         <div
-          class="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+          class="rounded-xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
         >
           <h2
             class="mb-6 flex items-center text-2xl font-medium text-gray-900 dark:text-white"
@@ -537,13 +505,13 @@
           <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <NuxtLink
               to="/workout/upper"
-              class="rounded-2xl bg-gray-900 p-6 text-center font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
+              class="rounded-lg bg-gray-900 p-6 text-center font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
             >
               Continuar Treino Superior
             </NuxtLink>
             <NuxtLink
               to="/workout/lower"
-              class="rounded-2xl bg-gray-900 p-6 text-center font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
+              class="rounded-lg bg-gray-900 p-6 text-center font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
             >
               Continuar Treino Inferior
             </NuxtLink>

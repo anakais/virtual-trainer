@@ -3,16 +3,10 @@
     class="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-zinc-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
   >
     <!-- Header -->
-    <header class="px-4 py-16 text-center">
-      <h1
-        class="mb-4 text-6xl font-light tracking-tight text-gray-900 dark:text-white"
-      >
-        Virtual Trainer
-      </h1>
-      <p class="text-xl font-light text-gray-600 dark:text-gray-300">
-        Seu personal trainer digital
-      </p>
-    </header>
+    <AppHeader
+      title="Virtual Trainer"
+      subtitle="Seu personal trainer digital"
+    />
 
     <!-- Main Content -->
     <main class="container mx-auto px-6 py-8">
@@ -20,13 +14,13 @@
         <!-- Welcome Section -->
         <div class="mb-16 text-center">
           <div
-            class="mb-12 rounded-3xl border border-gray-100 bg-white p-12 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+            class="mb-8 rounded-xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
           >
-            <h2 class="mb-6 text-3xl font-light text-gray-900 dark:text-white">
+            <h2 class="mb-4 text-2xl font-light text-gray-900 dark:text-white">
               Bem-vindo ao seu treino
             </h2>
             <p
-              class="mx-auto max-w-2xl text-lg leading-relaxed text-gray-600 dark:text-gray-300"
+              class="mx-auto max-w-2xl text-sm leading-relaxed text-gray-600 dark:text-gray-300"
             >
               Escolha o tipo de treino que deseja realizar hoje. Cada sessão é
               personalizada para maximizar seus resultados.
@@ -109,7 +103,7 @@
               Dica do Personal
             </h4>
             <p
-              class="mx-auto max-w-3xl leading-relaxed text-gray-600 dark:text-gray-300"
+              class="mx-auto max-w-3xl text-sm leading-relaxed text-gray-600 dark:text-gray-300"
             >
               Alternar entre treinos superiores e inferiores permite que cada
               grupo muscular se recupere adequadamente, maximizando seus ganhos
@@ -121,7 +115,7 @@
           <div class="text-center">
             <NuxtLink
               to="/history"
-              class="inline-flex items-center rounded-2xl bg-gray-900 px-8 py-4 font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
+              class="inline-flex items-center rounded-lg bg-gray-900 px-8 py-4 font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
             >
               <span class="mr-2">📊</span>
               Ver Histórico de Treinos

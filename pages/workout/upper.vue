@@ -3,55 +3,12 @@
     class="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-zinc-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
   >
     <!-- Header -->
-    <header class="px-4 py-12 text-center">
-      <div class="mx-auto mb-8 flex max-w-4xl items-center justify-between">
-        <NuxtLink
-          to="/"
-          class="inline-flex items-center text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
-        >
-          <svg
-            class="mr-2 h-5 w-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M15 19l-7-7 7-7"
-            ></path>
-          </svg>
-          Voltar
-        </NuxtLink>
-        <NuxtLink
-          to="/history"
-          class="inline-flex items-center text-gray-600 transition-colors hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
-        >
-          <svg
-            class="mr-2 h-5 w-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-            ></path>
-          </svg>
-          Histórico
-        </NuxtLink>
-      </div>
-      <h1
-        class="mb-4 text-5xl font-light tracking-tight text-gray-900 dark:text-white"
-      >
-        Treino Superior
-      </h1>
-      <p class="text-lg font-light text-gray-600 dark:text-gray-300">
-        5 exercícios • 3 séries cada
-      </p>
+    <AppHeader
+      showBack
+      showHistory
+      title="Treino Superior"
+      subtitle="5 exercícios • 3 séries cada"
+    >
       <div
         v-if="hasSavedData"
         class="mt-4"
@@ -75,7 +32,7 @@
           Progresso salvo automaticamente
         </span>
       </div>
-    </header>
+    </AppHeader>
 
     <!-- Workout List -->
     <main class="container mx-auto px-6 py-8">
@@ -84,12 +41,12 @@
         <div
           v-for="(exercise, index) in exercises"
           :key="exercise.name"
-          class="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+          class="rounded-xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
         >
           <div class="mb-6 flex items-center justify-between">
             <div class="flex items-center space-x-4">
               <div
-                class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600"
+                class="flex h-16 w-16 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600"
               >
                 <span class="text-2xl text-white">{{ exercise.emoji }}</span>
               </div>
@@ -119,7 +76,7 @@
           />
 
           <!-- Exercise Tips -->
-          <div class="mt-6 rounded-2xl bg-blue-50 p-4 dark:bg-blue-900/30">
+          <div class="mt-6 rounded-lg bg-blue-50 p-4 dark:bg-blue-900/30">
             <p
               class="flex items-start text-sm text-blue-800 dark:text-blue-200"
             >
@@ -143,7 +100,7 @@
 
         <!-- Progress Summary -->
         <div
-          class="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+          class="rounded-xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
         >
           <h3
             class="mb-6 flex items-center text-2xl font-medium text-gray-900 dark:text-white"
@@ -164,9 +121,7 @@
             Progresso do Treino
           </h3>
           <div class="mb-6 grid grid-cols-2 gap-6">
-            <div
-              class="rounded-2xl bg-gray-50 p-6 text-center dark:bg-gray-700"
-            >
+            <div class="rounded-lg bg-gray-50 p-6 text-center dark:bg-gray-700">
               <div
                 class="mb-2 text-3xl font-light text-gray-900 dark:text-white"
                 >{{ completedSets }}</div
@@ -175,9 +130,7 @@
                 >Séries Concluídas</div
               >
             </div>
-            <div
-              class="rounded-2xl bg-gray-50 p-6 text-center dark:bg-gray-700"
-            >
+            <div class="rounded-lg bg-gray-50 p-6 text-center dark:bg-gray-700">
               <div
                 class="mb-2 text-3xl font-light text-gray-900 dark:text-white"
                 >{{ totalSets }}</div
@@ -202,13 +155,13 @@
         <div class="flex space-x-4">
           <button
             @click="resetWorkout"
-            class="flex-1 rounded-2xl border border-gray-200 bg-white py-4 font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+            class="flex-1 rounded-lg border border-gray-200 bg-white py-4 font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
           >
             Reiniciar Treino
           </button>
           <button
             @click="saveWorkout"
-            class="flex-1 rounded-2xl bg-gray-900 py-4 font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
+            class="flex-1 rounded-lg bg-gray-900 py-4 font-medium text-white transition-colors hover:bg-gray-800 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-100"
           >
             Salvar Progresso
           </button>

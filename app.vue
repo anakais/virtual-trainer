@@ -1,5 +1,7 @@
 <template>
   <div>
+    <UpdatePrompt />
+
     <!-- Theme Toggle Button -->
     <button
       @click="toggleTheme"
@@ -43,6 +45,7 @@
 </template>
 
 <script setup>
+import UpdatePrompt from '~/components/UpdatePrompt.vue';
 const { isDark, toggleTheme, initTheme, watchSystemTheme } = useTheme();
 
 onMounted(() => {

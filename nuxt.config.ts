@@ -44,6 +44,7 @@ export default defineNuxtConfig({
   // @ts-ignore - provided by @vite-pwa/nuxt
   pwa: {
     registerType: 'autoUpdate',
+    strategies: 'generateSW',
     manifest: {
       name: 'Gym',
       short_name: 'Gym',
@@ -68,6 +69,8 @@ export default defineNuxtConfig({
       ],
     },
     workbox: {
+      clientsClaim: true,
+      skipWaiting: true,
       globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
       navigateFallback: '/',
       runtimeCaching: [

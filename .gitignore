@@ -4,6 +4,7 @@
 .nuxt
 .nitro
 .cache
+pnpm-lock.yaml
 dist
 
 # Node dependencies

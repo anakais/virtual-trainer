@@ -206,7 +206,7 @@
             </h2>
             <button
               @click="clearAllData"
-              class="inline-flex items-center rounded-xl bg-red-50 px-4 py-2 font-medium text-red-700 transition-colors hover:bg-red-100 dark:bg-red-900/30 dark:text-red-300 dark:hover:bg-red-900/50"
+              class="inline-flex items-center rounded-xl bg-red-50 px-4 py-2 text-xs font-medium text-red-700 transition-colors hover:bg-red-100 dark:bg-red-900/30 dark:text-red-300 dark:hover:bg-red-900/50"
             >
               <svg
                 class="mr-2 h-4 w-4"
@@ -276,7 +276,7 @@
                 </div>
                 <button
                   @click="toggleDayExpansion(date)"
-                  class="inline-flex items-center rounded-xl border border-gray-200 bg-white px-4 py-2 font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-500 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500"
+                  class="inline-flex items-center rounded-xl border border-gray-200 bg-white px-4 py-2 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-500 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500"
                 >
                   <svg
                     class="mr-2 h-4 w-4"
@@ -359,7 +359,7 @@
                   :key="`${date}-${index}`"
                   class="rounded-xl bg-white p-6 dark:bg-gray-600"
                 >
-                  <div class="mb-4 flex items-center justify-between">
+                  <div class="mb-4 items-center justify-between">
                     <h4
                       class="flex items-center text-lg font-medium text-gray-900 dark:text-white"
                     >
@@ -381,10 +381,10 @@
                           : 'Treino Inferior'
                       }}
                     </h4>
-                    <div class="flex space-x-2">
+                    <div class="mt-2 flex w-full space-x-2">
                       <button
                         @click="editWorkout(workout)"
-                        class="inline-flex items-center rounded-lg bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700 transition-colors hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-900/50"
+                        class="flex w-full items-center rounded-lg bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700 transition-colors hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300 dark:hover:bg-blue-900/50"
                       >
                         <svg
                           class="mr-1 h-4 w-4"
@@ -403,7 +403,7 @@
                       </button>
                       <button
                         @click="deleteWorkout(workout)"
-                        class="inline-flex items-center rounded-lg bg-red-50 px-3 py-1 text-sm font-medium text-red-700 transition-colors hover:bg-red-100 dark:bg-red-900/30 dark:text-red-300 dark:hover:bg-red-900/50"
+                        class="flex w-full items-center rounded-lg bg-red-50 px-3 py-1 text-sm font-medium text-red-700 transition-colors hover:bg-red-100 dark:bg-red-900/30 dark:text-red-300 dark:hover:bg-red-900/50"
                       >
                         <svg
                           class="mr-1 h-4 w-4"

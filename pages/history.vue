@@ -114,6 +114,105 @@
           </div>
         </div>
 
+        <!-- Volume Records -->
+        <div
+          class="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+        >
+          <h2
+            class="mb-6 flex items-center text-2xl font-medium text-gray-900 dark:text-white"
+          >
+            <svg
+              class="mr-3 h-6 w-6 text-gray-600 dark:text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              ></path>
+            </svg>
+            Records de Volume
+          </h2>
+          <div class="grid gap-6 md:grid-cols-2">
+            <div
+              v-for="section in volumeRecords"
+              :key="section.type"
+              class="rounded-2xl bg-gray-50 p-6 dark:bg-gray-700"
+            >
+              <div class="mb-4 flex items-center justify-between">
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white">
+                  {{
+                    section.type === 'upper'
+                      ? 'Treino Superior'
+                      : 'Treino Inferior'
+                  }}
+                </h3>
+              </div>
+              <div class="space-y-3">
+                <button
+                  v-for="item in section.items"
+                  :key="item.name"
+                  class="w-full rounded-xl bg-white p-4 dark:bg-gray-600"
+                  @click="toggleRecord(section.type, item.name)"
+                >
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                      <span class="text-lg">{{ item.emoji }}</span>
+                      <span class="font-medium text-gray-900 dark:text-white">{{
+                        item.name
+                      }}</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                      <div class="text-sm text-gray-700 dark:text-gray-200">
+                        {{ item.volume || 0 }} kg·reps
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    v-if="isRecordExpanded(section.type, item.name)"
+                    class="mt-3 grid grid-cols-3 gap-2"
+                  >
+                    <div
+                      v-for="(set, idx) in item.sets"
+                      :key="idx"
+                      class="rounded-lg bg-gray-50 p-2 text-center dark:bg-gray-700"
+                    >
+                      <div class="mb-1 text-xs text-gray-500 dark:text-gray-400"
+                        >Série {{ idx + 1 }}</div
+                      >
+                      <div
+                        class="font-medium"
+                        :class="
+                          set.completed
+                            ? 'text-green-600 dark:text-green-400'
+                            : 'text-gray-400 dark:text-gray-500'
+                        "
+                      >
+                        {{ Number(set.kilos) || 0 }}kg
+                        <br />
+                        {{ Number(set.reps) || 0 }}×
+                      </div>
+                      <div
+                        class="text-xs"
+                        :class="
+                          set.completed
+                            ? 'text-green-600 dark:text-green-400'
+                            : 'text-gray-400 dark:text-gray-500'
+                        "
+                      >
+                        {{ set.completed ? '✓' : '○' }}
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Workout History -->
         <div
           class="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm dark:border-gray-700 dark:bg-gray-800"
@@ -359,7 +458,7 @@
                   <!-- Exercise Details -->
                   <div class="space-y-3">
                     <div
-                      v-for="exercise in workout.exercises"
+                      v-for="exercise in getWorkoutExercisesWithMeta(workout)"
                       :key="exercise.name"
                       class="rounded-lg bg-gray-50 p-4 dark:bg-gray-700"
                     >
@@ -461,6 +560,7 @@ const {
   getWorkoutStats,
   clearAllWorkoutData,
   saveWorkoutData,
+  getDefaultExercisesMeta,
 } = useWorkout();
 
 const workoutHistory = ref({});
@@ -541,6 +641,19 @@ const toggleDayExpansion = (date) => {
   }
 };
 
+const getWorkoutExercisesWithMeta = (workout) => {
+  const meta = getDefaultExercisesMeta(workout.type);
+  const savedByName = Object.fromEntries(
+    (workout.exercises || [])
+      .filter((e) => e && e.name)
+      .map((e) => [e.name, e]),
+  );
+  return meta.map((m) => {
+    const saved = savedByName[m.name];
+    return { ...m, sets: saved && saved.sets ? saved.sets : [] };
+  });
+};
+
 const getDayCompletedSets = (dayWorkouts) => {
   return dayWorkouts.reduce(
     (total, workout) => total + (workout.completedSets || 0),
@@ -596,4 +709,49 @@ const loadData = () => {
 onMounted(() => {
   loadData();
 });
+
+// Build volume records view model
+const computeSectionRecords = (type) => {
+  const workout = workoutHistory.value[type];
+  if (!workout || !workout.recordsVolume) return [];
+  const meta = getDefaultExercisesMeta(type);
+  const byName = Object.fromEntries(meta.map((m) => [m.name, m]));
+  return Object.entries(workout.recordsVolume)
+    .map(([name, record]) => {
+      const sets = Array.isArray(record.sets) ? record.sets : [];
+      const volume = sets.reduce((sum, s) => {
+        const reps = Number(s.reps);
+        const kilos = Number(s.kilos);
+        if (!s.completed || !Number.isFinite(reps) || !Number.isFinite(kilos)) {
+          return sum;
+        }
+        return sum + reps * kilos;
+      }, 0);
+      return {
+        name,
+        emoji: byName[name]?.emoji || '🏋️',
+        volume,
+        sets,
+      };
+    })
+    .sort((a, b) => b.volume - a.volume);
+};
+
+const volumeRecords = computed(() => {
+  return [
+    { type: 'upper', items: computeSectionRecords('upper') },
+    { type: 'lower', items: computeSectionRecords('lower') },
+  ].filter((s) => s.items.length > 0);
+});
+
+// expand/collapse state for records
+const expandedRecords = ref({});
+const recordKey = (type, name) => `${type}::${name}`;
+const isRecordExpanded = (type, name) => {
+  return !!expandedRecords.value[recordKey(type, name)];
+};
+const toggleRecord = (type, name) => {
+  const key = recordKey(type, name);
+  expandedRecords.value[key] = !expandedRecords.value[key];
+};
 </script>

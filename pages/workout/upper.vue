@@ -288,7 +288,18 @@ const exercises = ref(defaultExercises);
 onMounted(() => {
   const savedData = loadWorkoutData('upper');
   if (savedData && savedData.exercises) {
-    exercises.value = savedData.exercises;
+    // merge saved sets into default metadata by name
+    const nameToSaved = Object.fromEntries(
+      savedData.exercises
+        .filter((ex) => ex && ex.name)
+        .map((ex) => [ex.name, ex]),
+    );
+    exercises.value.forEach((ex) => {
+      const saved = ex && ex.name ? nameToSaved[ex.name] : null;
+      if (saved && saved.sets) {
+        ex.sets = saved.sets;
+      }
+    });
   }
 });
 

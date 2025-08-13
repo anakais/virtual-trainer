@@ -220,87 +220,20 @@
 
 <script setup>
 import ExerciseSets from '~/components/ExerciseSets.vue';
-const { loadWorkoutData, saveWorkoutData, hasWorkoutData } = useWorkout();
+const {
+  loadWorkoutData,
+  saveWorkoutData,
+  hasWorkoutData,
+  getExercisesWithSaved,
+} = useWorkout();
 
-// Default exercises structure
-const defaultExercises = [
-  {
-    name: 'Pull-ups',
-    emoji: '🏋️',
-    description: 'Barra fixa - força de tração',
-    tip: 'Mantenha o corpo reto e controle o movimento na descida',
-    sets: [
-      { reps: 8, kilos: 70, completed: false },
-      { reps: 8, kilos: 70, completed: false },
-      { reps: 8, kilos: 70, completed: false },
-    ],
-  },
-  {
-    name: 'Australian Pull-ups',
-    emoji: '🤸',
-    description: 'Barra baixa - variação mais fácil',
-    tip: 'Mantenha o corpo alinhado e puxe até o peito tocar a barra',
-    sets: [
-      { reps: 12, kilos: 30, completed: false },
-      { reps: 12, kilos: 30, completed: false },
-      { reps: 12, kilos: 30, completed: false },
-    ],
-  },
-  {
-    name: 'Bíceps',
-    emoji: '💪',
-    description: 'Flexão de cotovelo - isolamento',
-    tip: 'Mantenha os cotovelos fixos e controle o movimento',
-    sets: [
-      { reps: 15, kilos: 15, completed: false },
-      { reps: 15, kilos: 15, completed: false },
-      { reps: 15, kilos: 15, completed: false },
-    ],
-  },
-  {
-    name: 'Push-ups',
-    emoji: '🔄',
-    description: 'Flexão de braço - peito e tríceps',
-    tip: 'Mantenha o corpo reto e desça até quase tocar o chão',
-    sets: [
-      { reps: 10, kilos: 70, completed: false },
-      { reps: 10, kilos: 70, completed: false },
-      { reps: 10, kilos: 70, completed: false },
-    ],
-  },
-  {
-    name: 'Shoulders',
-    emoji: '🏋️',
-    description: 'Desenvolvimento - ombros',
-    tip: 'Mantenha a postura ereta e controle o movimento',
-    sets: [
-      { reps: 12, kilos: 7.5, completed: false },
-      { reps: 12, kilos: 7.5, completed: false },
-      { reps: 12, kilos: 7.5, completed: false },
-    ],
-  },
-];
-
-// Load saved data or use default
-const exercises = ref(defaultExercises);
+// Load saved data if exists, otherwise defaults
+const exercises = ref(getExercisesWithSaved('upper'));
 
 // Load saved workout data on mount
 onMounted(() => {
-  const savedData = loadWorkoutData('upper');
-  if (savedData && savedData.exercises) {
-    // merge saved sets into default metadata by name
-    const nameToSaved = Object.fromEntries(
-      savedData.exercises
-        .filter((ex) => ex && ex.name)
-        .map((ex) => [ex.name, ex]),
-    );
-    exercises.value.forEach((ex) => {
-      const saved = ex && ex.name ? nameToSaved[ex.name] : null;
-      if (saved && saved.sets) {
-        ex.sets = saved.sets;
-      }
-    });
-  }
+  // refresh in case storage changed after mount
+  exercises.value = getExercisesWithSaved('upper');
 });
 
 // Check if there's saved data

@@ -222,87 +222,20 @@
 
 <script setup>
 import ExerciseSets from '~/components/ExerciseSets.vue';
-const { loadWorkoutData, saveWorkoutData, hasWorkoutData } = useWorkout();
+const {
+  loadWorkoutData,
+  saveWorkoutData,
+  hasWorkoutData,
+  getExercisesWithSaved,
+} = useWorkout();
 
-// Default exercises structure
-const defaultExercises = [
-  {
-    name: 'Squats',
-    emoji: '🏋️',
-    description: 'Agachamento - quadríceps e glúteos',
-    tip: 'Mantenha os pés na largura dos ombros e desça como se fosse sentar',
-    sets: [
-      { reps: 10, kilos: 70, completed: false },
-      { reps: 8, kilos: 70, completed: false },
-      { reps: 5, kilos: 70, completed: false },
-    ],
-  },
-  {
-    name: 'Extensor',
-    emoji: '💪',
-    description: 'Extensão de perna - quadríceps',
-    tip: 'Controle o movimento e não trave os joelhos no final',
-    sets: [
-      { reps: 10, kilos: 35, completed: false },
-      { reps: 10, kilos: 35, completed: false },
-      { reps: 10, kilos: 35, completed: false },
-    ],
-  },
-  {
-    name: 'Flexor',
-    emoji: '🦵',
-    description: 'Curl de perna - posterior da coxa',
-    tip: 'Mantenha o quadril estável e foque no movimento do joelho',
-    sets: [
-      { reps: 10, kilos: 30, completed: false },
-      { reps: 10, kilos: 30, completed: false },
-      { reps: 10, kilos: 30, completed: false },
-    ],
-  },
-  {
-    name: 'Calves',
-    emoji: '🦶',
-    description: 'Elevação de panturrilha - gastrocnêmio',
-    tip: 'Faça o movimento completo, subindo e descendo lentamente',
-    sets: [
-      { reps: 12, kilos: 100, completed: false },
-      { reps: 12, kilos: 100, completed: false },
-      { reps: 12, kilos: 100, completed: false },
-    ],
-  },
-  {
-    name: 'Abs',
-    emoji: '🔥',
-    description: 'Abdominal - core e reto abdominal',
-    tip: 'Mantenha o pescoço relaxado e foque em levantar os ombros',
-    sets: [
-      { reps: 10, completed: false },
-      { reps: 10, completed: false },
-      { reps: 10, completed: false },
-    ],
-  },
-];
-
-// Load saved data or use default
-const exercises = ref(defaultExercises);
+// Load saved data if exists, otherwise defaults
+const exercises = ref(getExercisesWithSaved('lower'));
 
 // Load saved workout data on mount
 onMounted(() => {
-  const savedData = loadWorkoutData('lower');
-  if (savedData && savedData.exercises) {
-    // merge saved sets into default metadata by name
-    const nameToSaved = Object.fromEntries(
-      savedData.exercises
-        .filter((ex) => ex && ex.name)
-        .map((ex) => [ex.name, ex]),
-    );
-    exercises.value.forEach((ex) => {
-      const saved = ex && ex.name ? nameToSaved[ex.name] : null;
-      if (saved && saved.sets) {
-        ex.sets = saved.sets;
-      }
-    });
-  }
+  // refresh in case storage changed after mount
+  exercises.value = getExercisesWithSaved('lower');
 });
 
 // Check if there's saved data

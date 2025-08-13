@@ -87,6 +87,84 @@ export const useWorkout = () => {
     return [];
   };
 
+  const getDefaultExercises = (workoutType) => {
+    const meta = getDefaultExercisesMeta(workoutType);
+    const defaults = {
+      upper: {
+        'Pull-ups': [
+          { reps: 8, kilos: 70, completed: false },
+          { reps: 8, kilos: 70, completed: false },
+          { reps: 8, kilos: 70, completed: false },
+        ],
+        'Australian Pull-ups': [
+          { reps: 12, kilos: 30, completed: false },
+          { reps: 12, kilos: 30, completed: false },
+          { reps: 12, kilos: 30, completed: false },
+        ],
+        Bíceps: [
+          { reps: 15, kilos: 15, completed: false },
+          { reps: 15, kilos: 15, completed: false },
+          { reps: 15, kilos: 15, completed: false },
+        ],
+        'Push-ups': [
+          { reps: 10, kilos: 70, completed: false },
+          { reps: 10, kilos: 70, completed: false },
+          { reps: 10, kilos: 70, completed: false },
+        ],
+        Shoulders: [
+          { reps: 12, kilos: 7.5, completed: false },
+          { reps: 12, kilos: 7.5, completed: false },
+          { reps: 12, kilos: 7.5, completed: false },
+        ],
+      },
+      lower: {
+        Squats: [
+          { reps: 10, kilos: 70, completed: false },
+          { reps: 8, kilos: 70, completed: false },
+          { reps: 5, kilos: 70, completed: false },
+        ],
+        Extensor: [
+          { reps: 10, kilos: 35, completed: false },
+          { reps: 10, kilos: 35, completed: false },
+          { reps: 10, kilos: 35, completed: false },
+        ],
+        Flexor: [
+          { reps: 10, kilos: 30, completed: false },
+          { reps: 10, kilos: 30, completed: false },
+          { reps: 10, kilos: 30, completed: false },
+        ],
+        Calves: [
+          { reps: 12, kilos: 100, completed: false },
+          { reps: 12, kilos: 100, completed: false },
+          { reps: 12, kilos: 100, completed: false },
+        ],
+        Abs: [
+          { reps: 10, completed: false },
+          { reps: 10, completed: false },
+          { reps: 10, completed: false },
+        ],
+      },
+    };
+    return meta.map((m) => {
+      const sets =
+        (defaults[workoutType] && defaults[workoutType][m.name]) || [];
+      return { ...m, sets: sets.map((s) => ({ ...s })) };
+    });
+  };
+
+  const getExercisesWithSaved = (workoutType) => {
+    const defaults = getDefaultExercises(workoutType);
+    const saved = loadWorkoutData(workoutType);
+    if (!saved || !Array.isArray(saved.exercises)) return defaults;
+    const savedByName = Object.fromEntries(
+      saved.exercises.filter((ex) => ex && ex.name).map((ex) => [ex.name, ex]),
+    );
+    return defaults.map((ex) => {
+      const s = savedByName[ex.name];
+      return { ...ex, sets: s && Array.isArray(s.sets) ? s.sets : ex.sets };
+    });
+  };
+
   // Save workout data to localStorage
   const saveWorkoutData = (workoutType, exercises) => {
     if (process.client) {
@@ -239,5 +317,7 @@ export const useWorkout = () => {
     clearAllWorkoutData,
     getWorkoutStats,
     getDefaultExercisesMeta,
+    getDefaultExercises,
+    getExercisesWithSaved,
   };
 };

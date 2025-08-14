@@ -171,7 +171,8 @@ async function notifyEnd() {
     else playLegacyBeep();
     navigator.vibrate?.([200, 100, 200]);
 
-    if (canNotifyNow()) {
+    // Only notify if page is hidden (background)
+    if (document.visibilityState === 'hidden' && canNotifyNow()) {
       const reg = await navigator.serviceWorker?.ready;
       if (reg && reg.showNotification) {
         reg.showNotification('Descanso finalizado', {

@@ -1,6 +1,7 @@
 <template>
   <div>
     <NuxtPwaManifest />
+    <InstallPrompt />
     <UpdatePrompt />
 
     <!-- Theme Toggle Button -->
@@ -47,6 +48,7 @@
 
 <script setup>
 import UpdatePrompt from '~/components/UpdatePrompt.vue';
+import InstallPrompt from '~/components/InstallPrompt.vue';
 const { isDark, toggleTheme, initTheme, watchSystemTheme } = useTheme();
 
 onMounted(() => {

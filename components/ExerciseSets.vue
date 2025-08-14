@@ -86,6 +86,19 @@ const {
 } = useExerciseNotification();
 const { unlock, playBeepPattern, playLegacyBeep, isUnlocked } = useBeep();
 
+function isStandalonePWA() {
+  try {
+    return (
+      (window.matchMedia &&
+        window.matchMedia('(display-mode: standalone)').matches) ||
+      // iOS Safari standalone
+      (typeof navigator !== 'undefined' && navigator.standalone === true)
+    );
+  } catch (e) {
+    return false;
+  }
+}
+
 function handleButtonClick(setIndex) {
   // Emit original event
   emit('toggle-completed', setIndex);
@@ -166,13 +179,15 @@ function requestNotificationPermissionIfNeeded() {
 
 async function notifyEnd() {
   try {
-    // Always try modern beep; fallback to legacy if AudioContext not unlocked
-    if (isUnlocked()) playBeepPattern();
-    else playLegacyBeep();
-    navigator.vibrate?.([200, 100, 200]);
+    // Only emit local audio/vibration when NOT installed as PWA
+    if (!isStandalonePWA()) {
+      if (isUnlocked()) playBeepPattern();
+      else playLegacyBeep();
+      navigator.vibrate?.([200, 100, 200]);
+    }
 
-    // Only notify if page is hidden (background)
-    if (document.visibilityState === 'hidden' && canNotifyNow()) {
+    // notify when installed as PWA
+    if (canNotifyNow()) {
       const reg = await navigator.serviceWorker?.ready;
       if (reg && reg.showNotification) {
         reg.showNotification('Descanso finalizado', {

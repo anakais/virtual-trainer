@@ -171,21 +171,21 @@ async function notifyEnd() {
     else playLegacyBeep();
     navigator.vibrate?.([200, 100, 200]);
 
-    // // if (canNotifyNow()) {
-    // const reg = await navigator.serviceWorker?.ready;
-    // if (reg && reg.showNotification) {
-    //   reg.showNotification('Descanso finalizado', {
-    //     body: 'Hora de voltar ao exercício',
-    //     icon: '/favicon-32x32.png',
-    //     tag: 'rest-timer',
-    //     renotify: true,
-    //   });
-    // } else {
-    //   new Notification('Descanso finalizado', {
-    //     body: 'Hora de voltar ao exercício',
-    //   });
-    // }
-    // // }
+    if (canNotifyNow()) {
+      const reg = await navigator.serviceWorker?.ready;
+      if (reg && reg.showNotification) {
+        reg.showNotification('Descanso finalizado', {
+          body: 'Hora de voltar ao exercício',
+          icon: '/favicon-32x32.png',
+          tag: 'rest-timer',
+          renotify: true,
+        });
+      } else {
+        new Notification('Descanso finalizado', {
+          body: 'Hora de voltar ao exercício',
+        });
+      }
+    }
   } catch (e) {}
 }
 

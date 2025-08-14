@@ -49,26 +49,41 @@ export default defineNuxtConfig({
     manifest: {
       name: 'Gym',
       short_name: 'Gym',
+      description: 'Uma aplicação web moderna para acompanhamento de treinos',
       start_url: '/',
       scope: '/',
       display: 'standalone',
       display_override: ['standalone'],
-      background_color: '#ffffff',
+      background_color: '#000000',
       theme_color: '#111827',
       icons: [
         {
           src: '/android-chrome-192x192.png',
           sizes: '192x192',
           type: 'image/png',
-          purpose: 'any maskable',
+          purpose: 'any',
         },
         {
           src: '/android-chrome-512x512.png',
           sizes: '512x512',
           type: 'image/png',
-          purpose: 'any maskable',
+          purpose: 'any',
         },
         { src: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      ],
+      screenshots: [
+        {
+          src: '/screenshot-narrow.png',
+          sizes: '540x991',
+          type: 'image/png',
+          form_factor: 'narrow',
+        },
+        {
+          src: '/screenshot-wide.png',
+          sizes: '1440x1111',
+          type: 'image/png',
+          form_factor: 'wide',
+        },
       ],
     },
     workbox: {

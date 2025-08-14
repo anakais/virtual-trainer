@@ -1,5 +1,10 @@
 <template>
   <div class="space-y-3">
+    <NotificationPermissionPrompt
+      :open="notificationModalOpen"
+      @accept="onAcceptNotifications"
+      @cancel="onCancelNotifications"
+    />
     <div
       v-for="(set, setIndex) in sets"
       :key="setIndex"
@@ -59,6 +64,8 @@
 <script setup>
 import { reactive, onMounted, onUnmounted } from 'vue';
 import { useWakeLock } from '~/composables/useWakeLock';
+import NotificationPermissionPrompt from '~/components/NotificationPermissionPrompt.vue';
+import { useExerciseNotification } from '~/composables/useExerciseNotification';
 import { useBeep } from '~/composables/useBeep';
 
 const props = defineProps({
@@ -70,6 +77,13 @@ const emit = defineEmits(['toggle-completed']);
 const timers = reactive([]);
 let timerIntervals = [];
 const { acquire, release, isSupported } = useWakeLock();
+const notificationModalOpen = ref(false);
+const {
+  shouldPrompt,
+  requestAndSavePermission,
+  disableByUserChoice,
+  canNotifyNow,
+} = useExerciseNotification();
 const { unlock, playBeepPattern, playLegacyBeep, isUnlocked } = useBeep();
 
 function handleButtonClick(setIndex) {
@@ -96,6 +110,7 @@ function startTimer(setIndex) {
   if (timerIntervals[setIndex]) clearInterval(timerIntervals[setIndex]);
   timerIntervals[setIndex] = setInterval(() => tickTimer(setIndex), 250);
   if (isSupported) acquire();
+  requestNotificationPermissionIfNeeded();
 }
 
 function tickTimer(setIndex) {
@@ -141,6 +156,14 @@ onUnmounted(() => {
   );
 });
 
+function requestNotificationPermissionIfNeeded() {
+  try {
+    if (shouldPrompt()) {
+      notificationModalOpen.value = true;
+    }
+  } catch (e) {}
+}
+
 async function notifyEnd() {
   try {
     // Always try modern beep; fallback to legacy if AudioContext not unlocked
@@ -164,5 +187,15 @@ async function notifyEnd() {
     // }
     // // }
   } catch (e) {}
+}
+
+function onAcceptNotifications() {
+  notificationModalOpen.value = false;
+  requestAndSavePermission();
+}
+
+function onCancelNotifications() {
+  notificationModalOpen.value = false;
+  disableByUserChoice();
 }
 </script>

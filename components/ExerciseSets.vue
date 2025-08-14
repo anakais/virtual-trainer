@@ -59,6 +59,7 @@
 <script setup>
 import { reactive, onMounted, onUnmounted } from 'vue';
 import { useWakeLock } from '~/composables/useWakeLock';
+import { useBeep } from '~/composables/useBeep';
 
 const props = defineProps({
   sets: Array,
@@ -69,6 +70,7 @@ const emit = defineEmits(['toggle-completed']);
 const timers = reactive([]);
 let timerIntervals = [];
 const { acquire, release, isSupported } = useWakeLock();
+const { unlock, playBeepPattern, playLegacyBeep, isUnlocked } = useBeep();
 
 function handleButtonClick(setIndex) {
   // Emit original event
@@ -79,11 +81,12 @@ function handleButtonClick(setIndex) {
     props.sets[setIndex].completed
   ) {
     startTimer(setIndex);
+    unlock();
   }
 }
 
 function startTimer(setIndex) {
-  const durationSeconds = 45;
+  const durationSeconds = 5;
   const endAt = Date.now() + durationSeconds * 1000;
   timers[setIndex] = {
     running: true,
@@ -103,7 +106,7 @@ function tickTimer(setIndex) {
   if (t.remaining <= 0) {
     t.running = false;
     clearInterval(timerIntervals[setIndex]);
-    beep();
+    notifyEnd();
     // If no timers running, release wake lock
     const anyRunning = timers.some((tt) => tt && tt.running);
     if (!anyRunning) release();
@@ -112,22 +115,6 @@ function tickTimer(setIndex) {
 
 function tickAllTimers() {
   timers.forEach((_, idx) => tickTimer(idx));
-}
-
-function beep() {
-  // Simple beep using Web Audio API
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = ctx.createOscillator();
-    oscillator.type = 'sine';
-    oscillator.frequency.value = 432;
-    oscillator.connect(ctx.destination);
-    oscillator.start();
-    setTimeout(() => {
-      oscillator.stop();
-      ctx.close();
-    }, 300);
-  } catch (e) {}
 }
 
 onUnmounted(() => {
@@ -153,4 +140,29 @@ onUnmounted(() => {
     false,
   );
 });
+
+async function notifyEnd() {
+  try {
+    // Always try modern beep; fallback to legacy if AudioContext not unlocked
+    if (isUnlocked()) playBeepPattern();
+    else playLegacyBeep();
+    navigator.vibrate?.([200, 100, 200]);
+
+    // // if (canNotifyNow()) {
+    // const reg = await navigator.serviceWorker?.ready;
+    // if (reg && reg.showNotification) {
+    //   reg.showNotification('Descanso finalizado', {
+    //     body: 'Hora de voltar ao exercício',
+    //     icon: '/favicon-32x32.png',
+    //     tag: 'rest-timer',
+    //     renotify: true,
+    //   });
+    // } else {
+    //   new Notification('Descanso finalizado', {
+    //     body: 'Hora de voltar ao exercício',
+    //   });
+    // }
+    // // }
+  } catch (e) {}
+}
 </script>

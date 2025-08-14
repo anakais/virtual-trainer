@@ -49,10 +49,8 @@ export default defineNuxtConfig({
     manifest: {
       name: 'Gym',
       short_name: 'Gym',
-      start_url: '/?source=pwa',
-      scope: '/',
+      start_url: '/',
       display: 'standalone',
-      display_override: ['fullscreen', 'standalone'],
       background_color: '#ffffff',
       theme_color: '#111827',
       icons: [

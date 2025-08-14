@@ -58,6 +58,7 @@
 
 <script setup>
 import { reactive, onMounted, onUnmounted } from 'vue';
+import { useWakeLock } from '~/composables/useWakeLock';
 
 const props = defineProps({
   sets: Array,
@@ -67,6 +68,7 @@ const emit = defineEmits(['toggle-completed']);
 // Timer state for each set (stores absolute end time to survive background)
 const timers = reactive([]);
 let timerIntervals = [];
+const { acquire, release, isSupported } = useWakeLock();
 
 function handleButtonClick(setIndex) {
   // Emit original event
@@ -90,6 +92,7 @@ function startTimer(setIndex) {
   };
   if (timerIntervals[setIndex]) clearInterval(timerIntervals[setIndex]);
   timerIntervals[setIndex] = setInterval(() => tickTimer(setIndex), 250);
+  if (isSupported) acquire();
 }
 
 function tickTimer(setIndex) {
@@ -101,6 +104,9 @@ function tickTimer(setIndex) {
     t.running = false;
     clearInterval(timerIntervals[setIndex]);
     beep();
+    // If no timers running, release wake lock
+    const anyRunning = timers.some((tt) => tt && tt.running);
+    if (!anyRunning) release();
   }
 }
 
@@ -126,6 +132,7 @@ function beep() {
 
 onUnmounted(() => {
   timerIntervals.forEach((i) => clearInterval(i));
+  release();
 });
 
 onMounted(() => {

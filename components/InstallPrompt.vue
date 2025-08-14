@@ -53,6 +53,12 @@ function isStandalone() {
   );
 }
 
+function isMobile() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent,
+  );
+}
+
 function shouldShowNow() {
   try {
     const last = localStorage.getItem(STORAGE_KEY);
@@ -106,10 +112,24 @@ function dismiss() {
   markShownNow();
 }
 
+function showInstallPrompt() {
+  if (!isStandalone() && shouldShowNow() && (canInstall.value || isMobile())) {
+    isVisible.value = true;
+  }
+}
+
 onMounted(() => {
   if (isStandalone()) return;
+
   window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
   window.addEventListener('appinstalled', handleAppInstalled);
+
+  // For mobile devices, show prompt after a delay even without beforeinstallprompt
+  if (isMobile()) {
+    setTimeout(() => {
+      showInstallPrompt();
+    }, 2000); // Show after 2 seconds on mobile
+  }
 });
 
 onBeforeUnmount(() => {

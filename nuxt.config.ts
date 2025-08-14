@@ -50,7 +50,9 @@ export default defineNuxtConfig({
       name: 'Gym',
       short_name: 'Gym',
       start_url: '/',
+      scope: '/',
       display: 'standalone',
+      display_override: ['standalone'],
       background_color: '#ffffff',
       theme_color: '#111827',
       icons: [
